@@ -25,17 +25,17 @@ class _TelaLogin extends State<TelaLogin> {
           ),
           Container(
             alignment: Alignment.topCenter,
-            margin: EdgeInsets.symmetric(horizontal: 80, vertical: 40),
+            margin: EdgeInsets.symmetric(horizontal: 80, vertical: 170),
             child: const Text(
               "Login",
               style: TextStyle(
-                  fontFamily: 'Pacifico', fontSize: 50, color: Colors.black),
+                  fontFamily: 'Pacifico', fontSize: 80, color: Colors.black),
             ),
           ),
           Positioned(
-            top: 150,
-            left: 100,
-            right: 100,
+            top: 350,
+            left: 50,
+            right: 50,
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
@@ -48,16 +48,16 @@ class _TelaLogin extends State<TelaLogin> {
                 decoration: InputDecoration(
                   labelText: "Email",
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.all(10),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20),
                 ),
                 cursorColor: Colors.black,
               ),
             ),
           ),
           Positioned(
-            top: 250,
-            left: 100,
-            right: 100,
+            top: 450,
+            left: 50,
+            right: 50,
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
@@ -70,14 +70,14 @@ class _TelaLogin extends State<TelaLogin> {
                 decoration: InputDecoration(
                   labelText: "Senha",
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.all(10),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20)
                 ),
                 obscureText: true,
               ),
             ),
           ),
           Positioned(
-            bottom: 200, 
+            bottom: 200,
             left: 0,
             right: 0,
             child: Container(
@@ -86,7 +86,24 @@ class _TelaLogin extends State<TelaLogin> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {},
-                  child: Text("Entrar",style: TextStyle(fontSize: 20, fontFamily: 'Kanit')),
+                  child: Text("Entrar",
+                      style: TextStyle(fontSize: 20, fontFamily: 'Kanit')),
+                ),
+              ),
+            ),
+          ),
+          Divider(),
+          Positioned(
+            bottom: 150,
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 100),
+              child: TextButton(
+                onPressed: () {},
+                child: const Text(
+                  "Não Possui Conta? Cadastre-se",
+                  style: TextStyle(
+                      color: Colors.black,
+                      decorationColor: Colors.black),
                 ),
               ),
             ),
