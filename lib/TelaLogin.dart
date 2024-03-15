@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:teste/Notificacao.dart';
 import 'package:teste/_comum/minhas_cores.dart';
+import 'package:teste/cadastroUsuario.dart';
+
 
 class TelaLogin extends StatefulWidget {
   @override
@@ -8,20 +11,28 @@ class TelaLogin extends StatefulWidget {
 
 class _TelaLogin extends State<TelaLogin> {
   @override
+  final Notificacao _notificacao = Notificacao();
+  TextEditingController _controllerEmail = TextEditingController();
+  TextEditingController _controllerSenha = TextEditingController();
+
+
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromARGB(255, 134, 40, 221),
       body: Stack(
         children: [
           Container(
             decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
                   MinhasCores.roxoTopoGradiante,
                   MinhasCores.roxoBaixoGradiante,
-                ])),
+                ],
+              ),
+            ),
           ),
           Container(
             alignment: Alignment.topCenter,
@@ -42,10 +53,11 @@ class _TelaLogin extends State<TelaLogin> {
                 border: Border.all(color: Colors.black, width: 2),
                 color: Color.fromARGB(255, 207, 203, 203),
               ),
-              child: const TextField(
+              child: TextField(
+                controller: _controllerEmail,
                 style: TextStyle(color: Colors.black, fontFamily: 'Kanit'),
                 keyboardType: TextInputType.name,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Email",
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(horizontal: 20),
@@ -55,7 +67,7 @@ class _TelaLogin extends State<TelaLogin> {
             ),
           ),
           Positioned(
-            top: 450,
+            top: 420,
             left: 50,
             right: 50,
             child: Container(
@@ -64,20 +76,20 @@ class _TelaLogin extends State<TelaLogin> {
                 border: Border.all(color: Colors.black, width: 2),
                 color: Color.fromARGB(255, 207, 203, 203),
               ),
-              child: const TextField(
-                style: TextStyle(color: Colors.black),
+              child: TextField(
+                controller: _controllerSenha,
+                style: const TextStyle(color: Colors.black),
                 keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  labelText: "Senha",
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 20)
-                ),
+                decoration: const InputDecoration(
+                    labelText: "Senha",
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20)),
                 obscureText: true,
               ),
             ),
           ),
           Positioned(
-            bottom: 200,
+            bottom: 240,
             left: 0,
             right: 0,
             child: Container(
@@ -85,25 +97,24 @@ class _TelaLogin extends State<TelaLogin> {
               child: SizedBox(
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text("Entrar",
+                  onPressed: (){login();},
+                  child: const Text("Entrar",
                       style: TextStyle(fontSize: 20, fontFamily: 'Kanit')),
                 ),
               ),
             ),
           ),
-          Divider(),
+         const Divider(),
           Positioned(
-            bottom: 150,
+            bottom: 200,
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 100),
+              margin: EdgeInsets.symmetric(horizontal: 85),
               child: TextButton(
                 onPressed: () {},
                 child: const Text(
                   "Não Possui Conta? Cadastre-se",
                   style: TextStyle(
-                      color: Colors.black,
-                      decorationColor: Colors.black),
+                      color: Colors.black, decorationColor: Colors.black),
                 ),
               ),
             ),
@@ -112,4 +123,30 @@ class _TelaLogin extends State<TelaLogin> {
       ),
     );
   }
+
+
+
+  
+ void login()  {
+    if (!_controllerEmail.text.isNotEmpty) {
+      final notificacao = _notificacao.showCustomSnackbar('Informe o e-mail do seu usuário!', Color.fromARGB(255, 197, 15, 15), Color.fromARGB(255, 255, 255, 255));
+      ScaffoldMessenger.of(context).showSnackBar(notificacao);
+      return;
+    }
+
+    if (!_controllerSenha.text.isNotEmpty){
+      final notificacao = _notificacao.showCustomSnackbar('Informe sua senha por gentileza!', Color.fromARGB(255, 201, 15, 15), Color.fromARGB(255, 255, 255, 255));
+      ScaffoldMessenger.of(context).showSnackBar(notificacao);
+      return;
+    }
+
+    if (_controllerEmail.text.isNotEmpty || _controllerSenha.text.isNotEmpty){
+      final notificacao = _notificacao.showCustomSnackbar('Login realizado com sucesso!', Color.fromARGB(255, 32, 133, 28), Color.fromARGB(255, 0, 0, 0));
+      ScaffoldMessenger.of(context).showSnackBar(notificacao);
+      return;
+    }
 }
+
+}
+
+
