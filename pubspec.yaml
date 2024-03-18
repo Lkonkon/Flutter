@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  objectbox: ^2.5.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -80,7 +81,7 @@ flutter:
         - asset: assets/fonts/Pacifico-Regular.ttf
     - family: Kanit
       fonts:
-        - asset: assets/fonts/Kanit-Light.ttf
+        - asset: assets/fonts/Kanit-Black.ttf
        # - asset: assets/fonts/Pacifico-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

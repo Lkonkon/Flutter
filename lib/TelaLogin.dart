@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:teste/Menu.dart';
 import 'package:teste/Notificacao.dart';
 import 'package:teste/_comum/minhas_cores.dart';
-import 'package:teste/cadastroUsuario.dart';
-
 
 class TelaLogin extends StatefulWidget {
   @override
@@ -143,6 +142,7 @@ class _TelaLogin extends State<TelaLogin> {
     if (_controllerEmail.text.isNotEmpty || _controllerSenha.text.isNotEmpty){
       final notificacao = _notificacao.showCustomSnackbar('Login realizado com sucesso!', Color.fromARGB(255, 32, 133, 28), Color.fromARGB(255, 0, 0, 0));
       ScaffoldMessenger.of(context).showSnackBar(notificacao);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Menu())); 
       return;
     }
 }

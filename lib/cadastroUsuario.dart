@@ -192,6 +192,7 @@ class _cadastroUsuario extends State<cadastroUsuario > {
     if (_controllerUsuario.text.isNotEmpty && _controllerEmail.text.isNotEmpty && _controllerSenha1.text == _controllerSenha2.text){
       final notificacao = _notificacao.showCustomSnackbar('Cadastro realizado com sucesso', Color.fromARGB(255, 32, 133, 28), Color.fromARGB(255, 0, 0, 0));
       ScaffoldMessenger.of(context).showSnackBar(notificacao);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => TelaLogin())); 
       return;
     }
 }

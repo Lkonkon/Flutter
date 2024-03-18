@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:teste/cadastroUsuario.dart';
-import 'package:teste/TelaLogin.dart';
+import 'package:teste/Menu2.dart';
 
 
 void main(){
   runApp(
-    MaterialApp(home: cadastroUsuario(),
+    MaterialApp(home: Menu2(),
     debugShowCheckedModeBanner: false,
     )
    
