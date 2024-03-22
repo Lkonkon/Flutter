@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:teste/Menu.dart';
+import 'package:teste/Menu2.dart';
 import 'package:teste/Notificacao.dart';
 import 'package:teste/_comum/minhas_cores.dart';
+import 'package:teste/cadastroUsuario.dart';
+import 'package:teste/models/local_source.dart';
+import 'package:teste/models/user_model.dart';
 
 class TelaLogin extends StatefulWidget {
   @override
@@ -10,9 +14,12 @@ class TelaLogin extends StatefulWidget {
 
 class _TelaLogin extends State<TelaLogin> {
   @override
+  // ignore: override_on_non_overriding_member
   final Notificacao _notificacao = Notificacao();
   TextEditingController _controllerEmail = TextEditingController();
   TextEditingController _controllerSenha = TextEditingController();
+    final LocalDataSource _localDataSource = LocalDataSource();
+
 
 
   Widget build(BuildContext context) {
@@ -109,7 +116,9 @@ class _TelaLogin extends State<TelaLogin> {
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 85),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => cadastroUsuario())); 
+                },
                 child: const Text(
                   "Não Possui Conta? Cadastre-se",
                   style: TextStyle(
@@ -126,7 +135,7 @@ class _TelaLogin extends State<TelaLogin> {
 
 
   
- void login()  {
+ Future<void> login()  async {
     if (!_controllerEmail.text.isNotEmpty) {
       final notificacao = _notificacao.showCustomSnackbar('Informe o e-mail do seu usuário!', Color.fromARGB(255, 197, 15, 15), Color.fromARGB(255, 255, 255, 255));
       ScaffoldMessenger.of(context).showSnackBar(notificacao);
@@ -139,14 +148,19 @@ class _TelaLogin extends State<TelaLogin> {
       return;
     }
 
-    if (_controllerEmail.text.isNotEmpty || _controllerSenha.text.isNotEmpty){
+    bool loginSuccess = await _localDataSource.verifyLogin(_controllerEmail.text.toString(), _controllerSenha.text.toString());
+
+    if (loginSuccess){
       final notificacao = _notificacao.showCustomSnackbar('Login realizado com sucesso!', Color.fromARGB(255, 32, 133, 28), Color.fromARGB(255, 0, 0, 0));
       ScaffoldMessenger.of(context).showSnackBar(notificacao);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Menu())); 
+      User? user = await _localDataSource.getUserByMail(_controllerEmail.text);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Menu2()));
+    }else {
+      final notificacao = _notificacao.showCustomSnackbar('Usuário não encontrado na base de dados!', Colors.red, Colors.white);
+      ScaffoldMessenger.of(context).showSnackBar(notificacao);
       return;
     }
 }
-
 }
 
 

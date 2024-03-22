@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:teste/Notificacao.dart';
 import 'package:teste/TelaLogin.dart';
 import 'package:teste/_comum/minhas_cores.dart';
+import 'package:teste/models/local_source.dart';
 
 
 class cadastroUsuario extends StatefulWidget {
@@ -9,13 +10,14 @@ class cadastroUsuario extends StatefulWidget {
   _cadastroUsuario createState() => _cadastroUsuario ();
 }
 
-class _cadastroUsuario extends State<cadastroUsuario > {
+class _cadastroUsuario extends State<cadastroUsuario > {  
   @override
   final Notificacao _notificacao = Notificacao();
   TextEditingController _controllerUsuario = TextEditingController();
   TextEditingController _controllerEmail = TextEditingController();
   TextEditingController _controllerSenha1 = TextEditingController();
   TextEditingController _controllerSenha2 = TextEditingController();
+  final LocalDataSource _localDataSource = LocalDataSource();
 
 
   Widget build(BuildContext context) {
@@ -149,7 +151,16 @@ class _cadastroUsuario extends State<cadastroUsuario > {
                 ),
               ),
             ),
-          ),  
+          ), 
+          Positioned(
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 30),
+              child: IconButton(onPressed:(){
+                Navigator.pop(context);
+              } ,icon: Icon(Icons.arrow_back_rounded),color: Colors.black,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -158,7 +169,7 @@ class _cadastroUsuario extends State<cadastroUsuario > {
 
 
   
- void cadastrar()  {
+ Future<void> cadastrar()  async {
     if (!_controllerUsuario.text.isNotEmpty) {
       final notificacao = _notificacao.showCustomSnackbar('Informe o seu nome de usuário!', Color.fromARGB(255, 197, 15, 15), Color.fromARGB(255, 255, 255, 255));
       ScaffoldMessenger.of(context).showSnackBar(notificacao);
@@ -189,14 +200,19 @@ class _cadastroUsuario extends State<cadastroUsuario > {
       return;
     }
 
-    if (_controllerUsuario.text.isNotEmpty && _controllerEmail.text.isNotEmpty && _controllerSenha1.text == _controllerSenha2.text){
+        bool regiserUserSuccess = await _localDataSource.registerUser(_controllerUsuario.text.toString(), _controllerEmail.text.toString(), _controllerSenha1.text.toString());
+
+
+    if (regiserUserSuccess){
       final notificacao = _notificacao.showCustomSnackbar('Cadastro realizado com sucesso', Color.fromARGB(255, 32, 133, 28), Color.fromARGB(255, 0, 0, 0));
       ScaffoldMessenger.of(context).showSnackBar(notificacao);
       Navigator.push(context, MaterialPageRoute(builder: (context) => TelaLogin())); 
       return;
-    }
+    }else {
+      final notificacao = _notificacao.showCustomSnackbar('Falha ao tentar registrar usuário!', Colors.red, Colors.white);
+      ScaffoldMessenger.of(context).showSnackBar(notificacao);
 }
 
 }
 
-
+}

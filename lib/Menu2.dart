@@ -91,6 +91,15 @@ class _Menu2 extends State<Menu2> {
                 label: Text("Pedidos"),
               )),
         ),
+        Positioned(
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 30),
+              child: IconButton(onPressed:(){
+                Navigator.pop(context);
+              } ,icon: Icon(Icons.arrow_back_rounded),color: Colors.black,
+              ),
+            ),
+          ),
       ]),
     );
   }
